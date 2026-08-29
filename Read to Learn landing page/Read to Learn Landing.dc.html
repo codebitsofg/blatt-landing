@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ffffff; -webkit-font-smoothing: antialiased; }
+  a { color: #0052ff; text-decoration: none; }
+  a:hover { color: #003ecc; }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes tipIn { 0%, 18% { opacity: 0; transform: translateY(8px) scale(0.96); } 34%, 100% { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes wave { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+  @keyframes markPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+</style>
+</helmet>
+
+<div style="font-family: 'Inter', -apple-system, system-ui, Helvetica, Arial, sans-serif; color: #0a0b0d; background: #ffffff; overflow-x: hidden">
+
+  <nav style="position: sticky; top: 0; z-index: 50; height: 64px; display: flex; align-items: center; transition: background 240ms ease, border-color 240ms ease; background: {{ navBg }}; border-bottom: 1px solid {{ navBorder }}">
+    <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; gap: 32px">
+      <a href="#top" style="display: flex; align-items: center; gap: 10px; color: {{ navText }}">
+        <span style="width: 22px; height: 22px; border-radius: 4px; background: #0052ff; display: block; flex: none"></span>
+        <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.3px; white-space: nowrap; color: {{ navText }}">Read to Learn</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 28px; margin-left: 16px">
+        <a href="#stories" style="font-size: 14px; font-weight: 500; white-space: nowrap; color: {{ navText }}">Stories</a>
+        <a href="#how" style="font-size: 14px; font-weight: 500; white-space: nowrap; color: {{ navText }}">How it Works</a>
+        <a href="#levels" style="font-size: 14px; font-weight: 500; white-space: nowrap; color: {{ navText }}">Levels</a>
+        <a href="#languages" style="font-size: 14px; font-weight: 500; white-space: nowrap; color: {{ navText }}">Languages</a>
+        <a href="#pricing" style="font-size: 14px; font-weight: 500; white-space: nowrap; color: {{ navText }}">Pricing</a>
+      </div>
+      <div style="flex: 1"></div>
+      <div style="display: flex; align-items: center; gap: 16px">
+        <a href="#login" style="font-size: 14px; font-weight: 500; white-space: nowrap; color: {{ navText }}">Log in</a>
+        <a href="#start" style="display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 100px; background: #0052ff; color: #ffffff; font-size: 16px; font-weight: 600; white-space: nowrap; flex: none" style-hover="background: #003ecc; color: #ffffff">Start Reading</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="top" style="background: #0a0b0d; color: #ffffff; padding: 96px 32px 104px">
+    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.95fr); gap: 72px; align-items: center">
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px; animation: riseIn 700ms ease both">
+        <span style="display: inline-flex; align-items: center; padding: 7px 14px; border-radius: 100px; background: #16181c; color: #ffffff; font-size: 12px; font-weight: 600; line-height: 1.35; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap">A new way to learn languages</span>
+        <h1 style="margin: 0; font-size: clamp(44px, 5.4vw, 80px); font-weight: 400; line-height: 1.02; letter-spacing: -2px; max-width: 13ch; text-wrap: pretty">Learn a language the way you'd read a good book</h1>
+        <p style="margin: 0; font-size: 18px; font-weight: 400; line-height: 1.55; color: #a8acb3; max-width: 46ch; text-wrap: pretty">A library of classic stories in every language we support, leveled A1–B2, with instant translations, native narration, and vocabulary review built right in.</p>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 8px">
+          <a href="#start" style="display: inline-flex; align-items: center; height: 56px; padding: 0 32px; border-radius: 100px; background: #0052ff; color: #ffffff; font-size: 16px; font-weight: 600" style-hover="background: #003ecc; color: #ffffff">Start Reading Free</a>
+          <a href="#demo" style="display: inline-flex; align-items: center; gap: 10px; height: 56px; padding: 0 28px; border-radius: 100px; background: transparent; border: 1px solid rgba(255,255,255,0.28); color: #ffffff; font-size: 16px; font-weight: 600" style-hover="background: #16181c; color: #ffffff">
+            <span style="width: 20px; height: 20px; border-radius: 9999px; background: #ffffff; display: inline-flex; align-items: center; justify-content: center; flex: none">
+              <span style="width: 0; height: 0; border-left: 6px solid #0a0b0d; border-top: 4px solid transparent; border-bottom: 4px solid transparent; margin-left: 2px; display: block"></span>
+            </span>
+            Watch a 60-second demo
+          </a>
+        </div>
+        <p style="margin: 4px 0 0; font-size: 13px; color: #7c828a">No credit card required · Free stories at every level</p>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 20px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.12); width: 100%">
+          <span style="font-size: 13px; color: #7c828a">Reading now in</span>
+          <span style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 100px; background: #16181c; font-size: 14px; font-weight: 500">German <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #a8acb3">500+</span></span>
+          <span style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 100px; background: #16181c; font-size: 14px; font-weight: 500">Turkish <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #a8acb3">320+</span></span>
+          <a href="#languages" style="font-size: 14px; font-weight: 600; color: #ffffff" style-hover="color: #a8acb3">See all levels →</a>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; position: relative; padding: 24px 0 8px; animation: riseIn 900ms ease both">
+        <div style="width: 344px; border-radius: 40px; background: #16181c; padding: 12px; border: 1px solid rgba(255,255,255,0.08); position: relative; z-index: 1">
+          <div style="border-radius: 30px; background: #ffffff; color: #0a0b0d; overflow: hidden; padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 16px">
+            <div style="display: flex; align-items: center; justify-content: space-between">
+              <span style="display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: #0a0b0d">
+                <span style="width: 8px; height: 8px; border-radius: 9999px; background: #0052ff; display: block"></span>German</span>
+              <div style="display: flex; align-items: center; gap: 6px">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #7c828a">CH. 3 / 8</span>
+                <span style="display: inline-flex; padding: 3px 9px; border-radius: 100px; background: #eef0f3; color: #0a0b0d; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500">A2</span>
+              </div>
+            </div>
+            <div style="height: 1px; background: #eef0f3"></div>
+            <h3 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.3px">The Woman at the Well</h3>
+            <div style="position: relative">
+              <span style="position: absolute; left: -6px; right: -6px; height: 28px; border-radius: 6px; background: rgba(0,82,255,0.10); transition: top 420ms cubic-bezier(0.4, 0, 0.2, 1); top: {{ readTop }}; display: block"></span>
+              <p style="margin: 0; position: relative; font-size: 16px; line-height: 28px; color: #0a0b0d">There was once a small village at the edge of the forest. Every morning the old woman went to the well to
+                <span style="display: inline-block; background: rgba(0,82,255,0.14); border-radius: 4px; padding: 0 3px; color: #0052ff; font-weight: 600">fetch</span> water.</p>
+            </div>
+            <div style="position: relative; align-self: stretch; padding: 10px 12px; border-radius: 12px; background: #0a0b0d; color: #ffffff; animation: tipIn 3200ms ease both; display: flex; flex-direction: column; gap: 3px">
+              <span style="position: absolute; top: -4px; left: 18px; width: 10px; height: 10px; background: #0a0b0d; transform: rotate(45deg); display: block"></span>
+              <span style="font-size: 14px; font-weight: 600; line-height: 1.2">holen · to fetch, to get</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #a8acb3">German · verb</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 16px; background: #eef0f3">
+              <div style="display: flex; align-items: center; gap: 12px">
+                <span style="width: 34px; height: 34px; border-radius: 9999px; background: #0052ff; display: inline-flex; align-items: center; justify-content: center; flex: none">
+                  <span style="width: 3px; height: 13px; border-radius: 1px; background: #ffffff; display: block; margin-right: 3px"></span>
+                  <span style="width: 3px; height: 13px; border-radius: 1px; background: #ffffff; display: block"></span>
+                </span>
+                <div style="display: flex; align-items: flex-end; gap: 2px; height: 30px; flex: 1">{{ waveform }}</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #5b616e">{{ elapsed }}</span>
+                <span style="position: relative; height: 3px; border-radius: 2px; background: #dee1e6; flex: 1; display: block">
+                  <span style="position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; background: #0052ff; width: {{ progress }}; display: block"></span>
+                </span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #7c828a">1:42</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="position: relative; z-index: 1; width: 344px; margin-top: -20px; padding: 30px 20px 18px; border-radius: 20px; background: #16181c; border: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; align-items: center; justify-content: space-between">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #a8acb3">SAVED TODAY</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: #ffffff">7</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px">
+              <span style="font-size: 14px; font-weight: 600; color: #ffffff">holen</span>
+              <span style="font-size: 12px; color: #7c828a">to fetch</span>
+            </div>
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px">
+              <span style="font-size: 14px; font-weight: 600; color: #ffffff">der Brunnen</span>
+              <span style="font-size: 12px; color: #7c828a">the well</span>
+            </div>
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px">
+              <span style="font-size: 14px; font-weight: 600; color: #ffffff">der Rand</span>
+              <span style="font-size: 12px; color: #7c828a">the edge</span>
+            </div>
+          </div>
+          <span style="height: 1px; background: rgba(255,255,255,0.12); display: block"></span>
+          <span style="font-size: 12px; font-weight: 600; color: #0052ff">Review 7 words →</span>
+        </div>
+
+        <div style="position: absolute; right: -12px; top: 0; z-index: 2; padding: 14px 18px; border-radius: 100px; background: #ffffff; display: flex; align-items: center; gap: 10px">
+          <span style="width: 30px; height: 30px; border-radius: 9999px; background: conic-gradient(#0052ff 0turn 0.68turn, #eef0f3 0.68turn 1turn); display: inline-flex; align-items: center; justify-content: center; flex: none">
+            <span style="width: 20px; height: 20px; border-radius: 9999px; background: #ffffff; display: block"></span>
+          </span>
+          <div style="display: flex; flex-direction: column">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: #0a0b0d">17 / 25</span>
+            <span style="font-size: 11px; color: #7c828a">daily goal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 88px 32px; border-bottom: 1px solid #dee1e6">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 56px">
+      <h2 style="margin: 0; font-size: 24px; font-weight: 400; letter-spacing: -0.3px; color: #0a0b0d; text-align: center">A few more facts about us in numbers</h2>
+      <div style="width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+          <span style="font-size: 44px; font-weight: 400; line-height: 1; letter-spacing: -1px; color: #0a0b0d">500+</span>
+          <span style="font-size: 14px; color: #5b616e">Classic stories per language</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+          <span style="font-size: 44px; font-weight: 400; line-height: 1; letter-spacing: -1px; color: #0a0b0d">A1–B2</span>
+          <span style="font-size: 14px; color: #5b616e">Six CEFR levels covered</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+          <span style="font-size: 44px; font-weight: 400; line-height: 1; letter-spacing: -1px; color: #0a0b0d">10,000+</span>
+          <span style="font-size: 14px; color: #5b616e">Words learned daily</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+          <span style="font-size: 44px; font-weight: 400; line-height: 1; letter-spacing: -1px; color: #0a0b0d">4.8</span>
+          <span style="font-size: 14px; color: #5b616e">Average App Store rating</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="languages" style="padding: 96px 32px; border-bottom: 1px solid #dee1e6">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px">
+        <h2 style="margin: 0; font-size: clamp(32px, 3.2vw, 44px); font-weight: 400; line-height: 1.09; letter-spacing: -1px; max-width: 20ch">Supported languages</h2>
+        <span style="font-size: 15px; color: #5b616e; padding-bottom: 6px; max-width: 34ch">Two full libraries today, each leveled A1–B2 with narration and review.</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px">
+        <div style="background: #0a0b0d; color: #ffffff; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+          <div style="display: flex; align-items: center; justify-content: space-between">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #a8acb3">01</span>
+            <span style="padding: 4px 12px; border-radius: 100px; background: #16181c; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase">Available</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-size: 32px; font-weight: 400; letter-spacing: -0.4px">German</span>
+            <span style="font-size: 15px; color: #a8acb3">Deutsch</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px">
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.12)">
+              <span style="font-size: 14px; color: #a8acb3">Stories</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500">500+</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.12)">
+              <span style="font-size: 14px; color: #a8acb3">Levels</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500">A1–B2</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between">
+              <span style="font-size: 14px; color: #a8acb3">Narration</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500">Native</span>
+            </div>
+          </div>
+          <a href="#start" style="margin-top: 8px; display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 20px; border-radius: 100px; background: #0052ff; color: #ffffff; font-size: 16px; font-weight: 600" style-hover="background: #003ecc; color: #ffffff">Start in German</a>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid #dee1e6; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+          <div style="display: flex; align-items: center; justify-content: space-between">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #7c828a">02</span>
+            <span style="padding: 4px 12px; border-radius: 100px; background: #eef0f3; color: #0a0b0d; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase">Available</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-size: 32px; font-weight: 400; letter-spacing: -0.4px">Turkish</span>
+            <span style="font-size: 15px; color: #7c828a">Türkçe</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px">
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #eef0f3">
+              <span style="font-size: 14px; color: #5b616e">Stories</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500">320+</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #eef0f3">
+              <span style="font-size: 14px; color: #5b616e">Levels</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500">A1–B2</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between">
+              <span style="font-size: 14px; color: #5b616e">Narration</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500">Native</span>
+            </div>
+          </div>
+          <a href="#start" style="margin-top: 8px; display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 20px; border-radius: 100px; background: #eef0f3; color: #0a0b0d; font-size: 16px; font-weight: 600" style-hover="background: #dee1e6; color: #0a0b0d">Start in Turkish</a>
+        </div>
+
+        <div style="background: #f7f7f7; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; justify-content: center">
+          <span style="font-size: 18px; font-weight: 600; line-height: 1.33">More languages in progress</span>
+          <span style="font-size: 16px; line-height: 1.5; color: #5b616e">Each new library ships only once it has enough leveled stories and native narration to read from A1 through B2.</span>
+          <a href="#contact" style="font-size: 16px; font-weight: 600; color: #0052ff">Request a language →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section style="padding: 96px 32px">
+    <div style="max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center">
+      <h2 style="margin: 0; font-size: clamp(36px, 3.8vw, 52px); font-weight: 400; line-height: 1.04; letter-spacing: -1.3px; text-wrap: pretty">Flashcards teach words. Stories teach language.</h2>
+      <p style="margin: 0; font-size: 18px; line-height: 1.6; color: #5b616e; max-width: 60ch; text-wrap: pretty">Most apps teach you isolated vocabulary. But real fluency comes from seeing words in context — in stories, in sentences, in the way native speakers actually use them.</p>
+    </div>
+    <sc-if value="{{ showComparison }}" hint-placeholder-val="{{ true }}">
+      <div style="max-width: 940px; margin: 72px auto 0; display: flex; flex-direction: column">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding-bottom: 20px; border-bottom: 1px solid #dee1e6">
+          <span style="font-size: 20px; font-weight: 400; color: #7c828a">Flashcard apps</span>
+          <span style="font-size: 20px; font-weight: 400; color: #0a0b0d">Read to Learn</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 28px 0; border-bottom: 1px solid #dee1e6">
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <span style="font-size: 19px; font-weight: 400; color: #a8acb3">Isolated words</span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 15px; color: #a8acb3">— Word lists with no source</span>
+              <span style="font-size: 15px; color: #a8acb3">— Nothing to reread</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="width: 18px; height: 18px; border-radius: 9999px; background: #0052ff; display: inline-flex; align-items: center; justify-content: center; flex: none">
+                <span style="width: 6px; height: 3px; border-left: 2px solid #ffffff; border-bottom: 2px solid #ffffff; transform: rotate(-45deg) translate(1px, -1px); display: block"></span>
+              </span>
+              <span style="font-size: 19px; font-weight: 400; color: #0a0b0d">Words in the context you met them</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px; padding-left: 28px">
+              <span style="font-size: 15px; color: #5b616e">— Every word keeps its sentence</span>
+              <span style="font-size: 15px; color: #5b616e">— Tap once, keep reading</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 28px 0; border-bottom: 1px solid #dee1e6">
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <span style="font-size: 19px; font-weight: 400; color: #a8acb3">Artificial sentences</span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 15px; color: #a8acb3">— Written for the exercise</span>
+              <span style="font-size: 15px; color: #a8acb3">— Language you never hear</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="width: 18px; height: 18px; border-radius: 9999px; background: #0052ff; display: inline-flex; align-items: center; justify-content: center; flex: none">
+                <span style="width: 6px; height: 3px; border-left: 2px solid #ffffff; border-bottom: 2px solid #ffffff; transform: rotate(-45deg) translate(1px, -1px); display: block"></span>
+              </span>
+              <span style="font-size: 19px; font-weight: 400; color: #0a0b0d">Real stories, natively narrated</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px; padding-left: 28px">
+              <span style="font-size: 15px; color: #5b616e">— Curated literary texts</span>
+              <span style="font-size: 15px; color: #5b616e">— Recorded by native speakers</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 28px 0; border-bottom: 1px solid transparent">
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <span style="font-size: 19px; font-weight: 400; color: #a8acb3">No reading practice</span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 15px; color: #a8acb3">— Sessions end after the drill</span>
+              <span style="font-size: 15px; color: #a8acb3">— No sense of progress in a text</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="width: 18px; height: 18px; border-radius: 9999px; background: #0052ff; display: inline-flex; align-items: center; justify-content: center; flex: none">
+                <span style="width: 6px; height: 3px; border-left: 2px solid #ffffff; border-bottom: 2px solid #ffffff; transform: rotate(-45deg) translate(1px, -1px); display: block"></span>
+              </span>
+              <span style="font-size: 19px; font-weight: 400; color: #0a0b0d">Built for reading, chapter by chapter</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px; padding-left: 28px">
+              <span style="font-size: 15px; color: #5b616e">— Leveled A1–B2 per story</span>
+              <span style="font-size: 15px; color: #5b616e">— Five minutes picks up where you left off</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </section>
+
+  <section id="stories" style="padding: 96px 32px">
+    <div style="max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #0052ff">Reading</span>
+        <h2 style="margin: 0; font-size: clamp(36px, 4vw, 56px); font-weight: 400; line-height: 1.05; letter-spacing: -1.4px; max-width: 18ch; text-wrap: pretty">A library built for exactly where you are</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px">
+        <div style="background: #f7f7f7; border-radius: 24px; padding: 32px; min-height: 300px; display: flex; flex-direction: column; gap: 20px">
+          <span style="width: 44px; height: 44px; border-radius: 9999px; background: #ffffff; display: inline-flex; align-items: center; justify-content: center; flex: none"><span style="width: 20px; height: 20px; border-radius: 4px; background: #0052ff; display: block"></span></span>
+          <div style="flex: 1"></div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <h3 style="margin: 0; font-size: 18px; font-weight: 600; line-height: 1.33; color: #0a0b0d">Classic stories, organized by category</h3>
+            <p style="margin: 0; font-size: 16px; line-height: 1.5; color: #5b616e; text-wrap: pretty">Fairy tales, short fiction, folklore, and more, curated from each language’s literary tradition. Browse by mood, length, or era — or just take the next chapter of what you were reading.</p>
+          </div>
+          <a href="#start" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 22px; border-radius: 100px; background: #0a0b0d; color: #ffffff; font-size: 15px; font-weight: 600; margin-top: 4px" style-hover="background: #16181c; color: #ffffff">Learn more <span style="width: 7px; height: 7px; border-right: 2px solid #ffffff; border-top: 2px solid #ffffff; transform: rotate(45deg); display: block"></span></a>
+        </div>
+        <div style="background: #f7f7f7; border-radius: 24px; padding: 32px; min-height: 300px; display: flex; flex-direction: column; gap: 20px">
+          <span style="width: 44px; height: 44px; border-radius: 9999px; background: #ffffff; display: inline-flex; align-items: center; justify-content: center; flex: none"><span style="width: 20px; height: 20px; border-radius: 9999px; border: 4px solid #0052ff; display: block"></span></span>
+          <div style="flex: 1"></div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <h3 style="margin: 0; font-size: 18px; font-weight: 600; line-height: 1.33; color: #0a0b0d">Every story leveled A1–B2 (CEFR)</h3>
+            <p style="margin: 0; font-size: 16px; line-height: 1.5; color: #5b616e; text-wrap: pretty">Difficulty always matches your ability, so you’re challenged, not overwhelmed. Levels are assigned per story, then checked chapter by chapter.</p>
+          </div>
+          <a href="#start" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 22px; border-radius: 100px; background: #0a0b0d; color: #ffffff; font-size: 15px; font-weight: 600; margin-top: 4px" style-hover="background: #16181c; color: #ffffff">Learn more <span style="width: 7px; height: 7px; border-right: 2px solid #ffffff; border-top: 2px solid #ffffff; transform: rotate(45deg); display: block"></span></a>
+        </div>
+        <div style="background: #f7f7f7; border-radius: 24px; padding: 32px; min-height: 300px; display: flex; flex-direction: column; gap: 20px">
+          <span style="width: 44px; height: 44px; border-radius: 9999px; background: #ffffff; display: inline-flex; align-items: center; justify-content: center; flex: none"><span style="width: 18px; height: 18px; background: #0052ff; transform: rotate(45deg); display: block"></span></span>
+          <div style="flex: 1"></div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <h3 style="margin: 0; font-size: 18px; font-weight: 600; line-height: 1.33; color: #0a0b0d">Split into short chapters</h3>
+            <p style="margin: 0; font-size: 16px; line-height: 1.5; color: #5b616e; text-wrap: pretty">Read in 5-minute sessions; pick up exactly where you left off, on any device. Your place, your saved words, and your audio position all travel with you.</p>
+          </div>
+          <a href="#start" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 22px; border-radius: 100px; background: #0a0b0d; color: #ffffff; font-size: 15px; font-weight: 600; margin-top: 4px" style-hover="background: #16181c; color: #ffffff">Learn more <span style="width: 7px; height: 7px; border-right: 2px solid #ffffff; border-top: 2px solid #ffffff; transform: rotate(45deg); display: block"></span></a>
+        </div>
+        <div style="background: #f7f7f7; border-radius: 24px; padding: 32px; min-height: 300px; display: flex; flex-direction: column; gap: 20px">
+          <span style="width: 44px; height: 44px; border-radius: 9999px; background: #ffffff; display: inline-flex; align-items: center; justify-content: center; flex: none"><span style="width: 22px; height: 16px; border-radius: 3px; background: #0a0b0d; display: block"></span></span>
+          <div style="flex: 1"></div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <h3 style="margin: 0; font-size: 18px; font-weight: 600; line-height: 1.33; color: #0a0b0d">New stories every week</h3>
+            <p style="margin: 0; font-size: 16px; line-height: 1.5; color: #5b616e; text-wrap: pretty">Each library grows with new titles at every level, recorded with native narration before they ship.</p>
+          </div>
+          <a href="#start" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 22px; border-radius: 100px; background: #0a0b0d; color: #ffffff; font-size: 15px; font-weight: 600; margin-top: 4px" style-hover="background: #16181c; color: #ffffff">Learn more <span style="width: 7px; height: 7px; border-right: 2px solid #ffffff; border-top: 2px solid #ffffff; transform: rotate(45deg); display: block"></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 96px 32px">
+    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center">
+      <div style="background: #0a0b0d; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 22px; color: #ffffff">
+        <p style="margin: 0; font-size: 19px; line-height: 1.85">The wanderer laid his coat on the bench and said nothing. A thin mist lay over the valley, and the road ahead of him was still
+          <span style="display: inline-block; background: rgba(0,82,255,0.22); border-radius: 4px; padding: 0 4px; color: #ffffff; font-weight: 600">long</span>.</p>
+        <div style="position: relative; align-self: stretch; max-width: 280px; padding: 12px 14px; border-radius: 12px; background: #ffffff; color: #0a0b0d; display: flex; flex-direction: column; gap: 4px; animation: tipIn 3600ms ease both">
+          <span style="position: absolute; top: -4px; left: 22px; width: 10px; height: 10px; background: #ffffff; transform: rotate(45deg); display: block"></span>
+          <span style="font-size: 15px; font-weight: 600; line-height: 1.2">weit · far, a long way</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #5b616e">German · adjective</span>
+          <span style="height: 1px; background: #eef0f3; margin: 2px 0"></span>
+          <span style="font-size: 13px; color: #0052ff; font-weight: 600">Saved to your words</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; background: #16181c; margin-top: 8px">
+          <span style="width: 32px; height: 32px; border-radius: 9999px; background: #ffffff; display: inline-flex; align-items: center; justify-content: center; flex: none">
+            <span style="width: 0; height: 0; border-left: 8px solid #0a0b0d; border-top: 5px solid transparent; border-bottom: 5px solid transparent; margin-left: 3px; display: block"></span>
+          </span>
+          <div style="display: flex; align-items: center; gap: 3px; height: 26px; flex: 1">{{ waveformDark }}</div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #a8acb3">0:54</span>
+        </div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7c828a; text-align: center">reading view · tap-to-translate</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 24px">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #0052ff">Understanding</span>
+        <h2 style="margin: 0; font-size: clamp(32px, 3.2vw, 44px); font-weight: 400; line-height: 1.09; letter-spacing: -1px; text-wrap: pretty">Never break your reading flow</h2>
+        <div style="display: flex; flex-direction: column; gap: 28px; margin-top: 8px">
+          <div style="display: flex; gap: 16px">
+            <span style="width: 40px; height: 40px; border-radius: 9999px; background: #eef0f3; display: inline-flex; align-items: center; justify-content: center; flex: none"><span style="width: 14px; height: 14px; border-radius: 9999px; background: #0052ff; display: block"></span></span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 18px; font-weight: 600; line-height: 1.33">Tap any word for instant translation</span>
+              <span style="font-size: 16px; line-height: 1.5; color: #5b616e">A small popup appears right where you're reading — no dictionary, no app-switching</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px">
+            <span style="width: 40px; height: 40px; border-radius: 9999px; background: #eef0f3; display: inline-flex; align-items: center; justify-content: center; flex: none"><span style="width: 14px; height: 10px; border-radius: 2px; background: #0052ff; display: block"></span></span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 18px; font-weight: 600; line-height: 1.33">Read-along narration</span>
+              <span style="font-size: 16px; line-height: 1.5; color: #5b616e">Hear native pronunciation as you follow along, so you build listening comprehension for free</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px">
+            <span style="width: 40px; height: 40px; border-radius: 9999px; background: #eef0f3; display: inline-flex; align-items: center; justify-content: center; flex: none"><span style="width: 14px; height: 14px; border-radius: 3px; border: 3px solid #0052ff; display: block"></span></span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 18px; font-weight: 600; line-height: 1.33">Automatic word collection</span>
+              <span style="font-size: 16px; line-height: 1.5; color: #5b616e">Every word you tap is saved automatically — you never have to manually add vocabulary</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 96px 32px; background: #f7f7f7">
+    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center">
+      <div style="display: flex; flex-direction: column; gap: 24px">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #0052ff">Practice</span>
+        <h2 style="margin: 0; font-size: clamp(32px, 3.2vw, 44px); font-weight: 400; line-height: 1.09; letter-spacing: -1px; text-wrap: pretty">What you read becomes what you know</h2>
+        <div style="display: flex; flex-direction: column; gap: 28px; margin-top: 8px">
+          <div style="display: flex; gap: 16px">
+            <span style="width: 40px; height: 40px; border-radius: 9999px; background: #eef0f3; display: inline-flex; align-items: center; justify-content: center; flex: none"><span style="width: 16px; height: 12px; border-radius: 2px; background: #0052ff; display: block"></span></span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 18px; font-weight: 600; line-height: 1.33">Your collection becomes a review list</span>
+              <span style="font-size: 16px; line-height: 1.5; color: #5b616e">Every saved word feeds into spaced, bite-sized review sessions</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px">
+            <span style="width: 40px; height: 40px; border-radius: 9999px; background: #eef0f3; display: inline-flex; align-items: center; justify-content: center; flex: none"><span style="width: 14px; height: 14px; border-radius: 9999px; border: 3px solid #0052ff; display: block"></span></span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 18px; font-weight: 600; line-height: 1.33">A daily goal you set yourself</span>
+              <span style="font-size: 16px; line-height: 1.5; color: #5b616e">Chosen during onboarding, based on your pace and available time</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px">
+            <span style="width: 40px; height: 40px; border-radius: 9999px; background: #eef0f3; display: inline-flex; align-items: center; justify-content: center; flex: none"><span style="width: 12px; height: 16px; border-radius: 3px 3px 6px 6px; background: #f4b000; display: block"></span></span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 18px; font-weight: 600; line-height: 1.33">Streaks and progress tracking</span>
+              <span style="font-size: 16px; line-height: 1.5; color: #5b616e">Visual progress toward your goal keeps momentum without feeling forced</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div style="background: #ffffff; border: 1px solid #dee1e6; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+          <div style="display: flex; align-items: center; justify-content: space-between">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #7c828a">REVIEW · 4 OF 12</span>
+            <span style="padding: 4px 12px; border-radius: 100px; background: #eef0f3; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500">A2</span>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 32px 0 24px">
+            <span style="font-size: 36px; font-weight: 400; letter-spacing: -0.5px">der Nebel</span>
+            <span style="font-size: 15px; color: #5b616e">from “The Wanderer”, Ch. 1</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+            <span style="height: 48px; border-radius: 100px; background: #eef0f3; color: #0a0b0d; font-size: 16px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center">Again</span>
+            <span style="height: 48px; border-radius: 100px; background: #0052ff; color: #ffffff; font-size: 16px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center">I knew it</span>
+          </div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #dee1e6; border-radius: 24px; padding: 24px 32px; display: flex; align-items: center; gap: 20px">
+          <span style="width: 64px; height: 64px; border-radius: 9999px; background: conic-gradient(#0052ff 0turn 0.68turn, #eef0f3 0.68turn 1turn); display: inline-flex; align-items: center; justify-content: center; flex: none">
+            <span style="width: 48px; height: 48px; border-radius: 9999px; background: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500">68%</span>
+          </span>
+          <div style="display: flex; flex-direction: column; gap: 4px; flex: 1">
+            <span style="font-size: 16px; font-weight: 600">Daily goal · 17 of 25 words</span>
+            <span style="font-size: 14px; color: #5b616e">A few minutes left today</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span style="width: 12px; height: 16px; border-radius: 3px 3px 6px 6px; background: #f4b000; display: block"></span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 500">31</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" style="padding: 96px 32px">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
+      <h2 style="margin: 0; font-size: clamp(32px, 3.2vw, 44px); font-weight: 400; line-height: 1.09; letter-spacing: -1px; max-width: 20ch">How it works</h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; position: relative">
+        <div style="display: flex; flex-direction: column; gap: 16px; padding-top: 28px; border-top: 1px solid #dee1e6">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: #0052ff">01</span>
+          <span style="font-size: 24px; font-weight: 400; letter-spacing: -0.4px">Pick a story at your level</span>
+          <span style="font-size: 16px; line-height: 1.5; color: #5b616e">Browse by category or continue your last chapter</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px; padding-top: 28px; border-top: 1px solid #dee1e6">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: #0052ff">02</span>
+          <span style="font-size: 24px; font-weight: 400; letter-spacing: -0.4px">Read, tap, and listen</span>
+          <span style="font-size: 16px; line-height: 1.5; color: #5b616e">Translate words instantly, hear native narration</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px; padding-top: 28px; border-top: 1px solid #dee1e6">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: #0052ff">03</span>
+          <span style="font-size: 24px; font-weight: 400; letter-spacing: -0.4px">Review each day</span>
+          <span style="font-size: 16px; line-height: 1.5; color: #5b616e">A few minutes of practice turns new words into memory</span>
+        </div>
+      </div>
+      <a href="#start" style="font-size: 16px; font-weight: 600; color: #0052ff">Try your first story free →</a>
+    </div>
+  </section>
+
+
+  <section id="featured" style="padding: 96px 40px; background: #0a0b0d; color: #ffffff">
+    <div style="max-width: 1440px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px">
+      <div style="overflow: hidden">
+        <div style="display: flex; transition: transform 620ms cubic-bezier(0.4, 0, 0.2, 1); transform: {{ slideTrack }}">
+        <div style="min-width: 92%; padding-right: 20px; box-sizing: border-box">
+          <div style="background: #16181c; border-radius: 24px; padding: 40px; display: grid; grid-template-columns: 0.88fr 1.12fr; gap: 56px; align-items: center">
+            <div style="position: relative; aspect-ratio: 1 / 1; border-radius: 16px; background: #16181c; overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-end; padding: 20px">
+              <img src="https://pub-0be523b1a38f46abbf534ad97d3402b2.r2.dev/covers/0a096746b4b5.png" alt="Story cover" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen" />
+              <span style="padding: 4px 12px; border-radius: 100px; background: #0a0b0d; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #ffffff">GERMAN · A2</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding-right: 16px">
+              <h3 style="margin: 0; font-size: clamp(28px, 3vw, 44px); font-weight: 400; line-height: 1.09; letter-spacing: -1px; color: #ffffff; text-wrap: pretty">The Woman at the Well</h3>
+              <p style="margin: 0; font-size: 18px; line-height: 1.55; color: #a8acb3; max-width: 40ch; text-wrap: pretty">A village folktale in eight short chapters — the gentlest place to start reading German at A2.</p>
+              <a href="#start" style="display: inline-flex; align-items: center; height: 56px; padding: 0 32px; border-radius: 100px; background: #ffffff; color: #0a0b0d; font-size: 16px; font-weight: 600" style-hover="background: #eef0f3; color: #0a0b0d">Start reading</a>
+            </div>
+          </div>
+        </div>
+        <div style="min-width: 92%; padding-right: 20px; box-sizing: border-box">
+          <div style="background: #16181c; border-radius: 24px; padding: 40px; display: grid; grid-template-columns: 0.88fr 1.12fr; gap: 56px; align-items: center">
+            <div style="position: relative; aspect-ratio: 1 / 1; border-radius: 16px; background: #16181c; overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-end; padding: 20px">
+              <img src="https://pub-0be523b1a38f46abbf534ad97d3402b2.r2.dev/covers/0a096746b4b5.png" alt="Story cover" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen" />
+              <span style="padding: 4px 12px; border-radius: 100px; background: #0a0b0d; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #ffffff">GERMAN · B1</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding-right: 16px">
+              <h3 style="margin: 0; font-size: clamp(28px, 3vw, 44px); font-weight: 400; line-height: 1.09; letter-spacing: -1px; color: #ffffff; text-wrap: pretty">The Wanderer</h3>
+              <p style="margin: 0; font-size: 18px; line-height: 1.55; color: #a8acb3; max-width: 40ch; text-wrap: pretty">A quiet road, a thin mist, and the vocabulary of weather and distance. Narrated at reading pace.</p>
+              <a href="#start" style="display: inline-flex; align-items: center; height: 56px; padding: 0 32px; border-radius: 100px; background: #ffffff; color: #0a0b0d; font-size: 16px; font-weight: 600" style-hover="background: #eef0f3; color: #0a0b0d">Start reading</a>
+            </div>
+          </div>
+        </div>
+        <div style="min-width: 92%; padding-right: 20px; box-sizing: border-box">
+          <div style="background: #16181c; border-radius: 24px; padding: 40px; display: grid; grid-template-columns: 0.88fr 1.12fr; gap: 56px; align-items: center">
+            <div style="position: relative; aspect-ratio: 1 / 1; border-radius: 16px; background: #16181c; overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-end; padding: 20px">
+              <img src="https://pub-0be523b1a38f46abbf534ad97d3402b2.r2.dev/covers/0a096746b4b5.png" alt="Story cover" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen" />
+              <span style="padding: 4px 12px; border-radius: 100px; background: #0a0b0d; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #ffffff">TURKISH · A2</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding-right: 16px">
+              <h3 style="margin: 0; font-size: clamp(28px, 3vw, 44px); font-weight: 400; line-height: 1.09; letter-spacing: -1px; color: #ffffff; text-wrap: pretty">Keloğlan ve Değirmen</h3>
+              <p style="margin: 0; font-size: 18px; line-height: 1.55; color: #a8acb3; max-width: 40ch; text-wrap: pretty">A Turkish folk classic in ten chapters, with tap-to-translate on every word and native narration.</p>
+              <a href="#start" style="display: inline-flex; align-items: center; height: 56px; padding: 0 32px; border-radius: 100px; background: #ffffff; color: #0a0b0d; font-size: 16px; font-weight: 600" style-hover="background: #eef0f3; color: #0a0b0d">Start reading</a>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #7c828a; text-align: center">Sample chapters are free in every language. Levels are assigned by CEFR band, not by chapter length.</p>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 8px">
+        <div style="display: flex; align-items: center; gap: 16px">
+          <div style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 100px; background: #16181c">
+            <span onClick="{{ go0 }}" style="width: {{ dot0w }}; height: 8px; border-radius: 100px; background: {{ dot0bg }}; cursor: pointer; transition: width 300ms ease, background 300ms ease; display: block"></span>
+            <span onClick="{{ go1 }}" style="width: {{ dot1w }}; height: 8px; border-radius: 100px; background: {{ dot1bg }}; cursor: pointer; transition: width 300ms ease, background 300ms ease; display: block"></span>
+            <span onClick="{{ go2 }}" style="width: {{ dot2w }}; height: 8px; border-radius: 100px; background: {{ dot2bg }}; cursor: pointer; transition: width 300ms ease, background 300ms ease; display: block"></span>
+          </div>
+          <button onClick="{{ togglePlay }}" style="width: 44px; height: 44px; border-radius: 9999px; background: #16181c; border: 0; color: #ffffff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 3px" style-hover="background: #24272c">{{ playGlyph }}</button>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px">
+          <button onClick="{{ prev }}" style="width: 44px; height: 44px; border-radius: 9999px; background: transparent; border: 1px solid rgba(255,255,255,0.28); color: #ffffff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center" style-hover="background: #16181c">
+            <span style="width: 8px; height: 8px; border-left: 2px solid #ffffff; border-bottom: 2px solid #ffffff; transform: rotate(45deg); display: block; margin-left: -2px"></span>
+          </button>
+          <button onClick="{{ next }}" style="width: 44px; height: 44px; border-radius: 9999px; background: transparent; border: 1px solid rgba(255,255,255,0.28); color: #ffffff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center" style-hover="background: #16181c">
+            <span style="width: 8px; height: 8px; border-right: 2px solid #ffffff; border-top: 2px solid #ffffff; transform: rotate(45deg); display: block; margin-right: -2px"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <sc-if value="{{ showTestimonials }}" hint-placeholder-val="{{ true }}">
+    <section style="padding: 96px 32px; background: #f7f7f7">
+      <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px">
+        <div style="background: #ffffff; border: 1px solid #dee1e6; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+          <div style="display: flex; align-items: center; gap: 5px">{{ starsSmall }}</div>
+          <p style="margin: 0; font-size: 18px; line-height: 1.5; font-weight: 400; text-wrap: pretty">“The tap-to-translate feature means I actually finish stories instead of giving up halfway.”</p>
+          <div style="margin-top: auto; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">Marta K.</span>
+            <span style="font-size: 14px; color: #7c828a">learning German for 8 months</span>
+          </div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #dee1e6; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+          <div style="display: flex; align-items: center; gap: 5px">{{ starsSmall }}</div>
+          <p style="margin: 0; font-size: 18px; line-height: 1.5; font-weight: 400; text-wrap: pretty">“Finally an app where I'm reading real stories, not just matching flashcards.”</p>
+          <div style="margin-top: auto; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">Daniel R.</span>
+            <span style="font-size: 14px; color: #7c828a">B1, self-taught for two years</span>
+          </div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #dee1e6; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+          <div style="display: flex; align-items: center; gap: 5px">{{ starsSmall }}</div>
+          <p style="margin: 0; font-size: 18px; line-height: 1.5; font-weight: 400; text-wrap: pretty">“The daily streak is what's kept me consistent for the first time ever.”</p>
+          <div style="margin-top: auto; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">Priya S.</span>
+            <span style="font-size: 14px; color: #7c828a">started at A1 in January</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ showLibraryPreview }}" hint-placeholder-val="{{ true }}">
+    <section id="levels" style="padding: 96px 32px">
+      <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px">
+        <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px">
+          <h2 style="margin: 0; font-size: clamp(32px, 3.2vw, 44px); font-weight: 400; line-height: 1.09; letter-spacing: -1px; max-width: 18ch">A taste of the library</h2>
+          <span style="font-size: 15px; color: #5b616e; padding-bottom: 6px">Hundreds more inside</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px">
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <div style="aspect-ratio: 3 / 4; border-radius: 16px; background: repeating-linear-gradient(135deg, #eef0f3 0 9px, #f7f7f7 9px 18px); display: flex; align-items: flex-end; padding: 12px">
+              <span style="padding: 4px 10px; border-radius: 100px; background: #ffffff; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500">A1</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 3px">
+              <span style="font-size: 15px; font-weight: 600">The Hare and the Hedgehog</span>
+              <span style="font-size: 13px; color: #7c828a">Fairy tales</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <div style="aspect-ratio: 3 / 4; border-radius: 16px; background: repeating-linear-gradient(135deg, #e6e9ee 0 9px, #f2f4f7 9px 18px); display: flex; align-items: flex-end; padding: 12px">
+              <span style="padding: 4px 10px; border-radius: 100px; background: #ffffff; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500">A1</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 3px">
+              <span style="font-size: 15px; font-weight: 600">The Woman at the Well</span>
+              <span style="font-size: 13px; color: #7c828a">Folklore</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <div style="aspect-ratio: 3 / 4; border-radius: 16px; background: repeating-linear-gradient(135deg, #eef0f3 0 9px, #f7f7f7 9px 18px); display: flex; align-items: flex-end; padding: 12px">
+              <span style="padding: 4px 10px; border-radius: 100px; background: #ffffff; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500">A2</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 3px">
+              <span style="font-size: 15px; font-weight: 600">The Town Musicians</span>
+              <span style="font-size: 13px; color: #7c828a">Fairy tales</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <div style="aspect-ratio: 3 / 4; border-radius: 16px; background: repeating-linear-gradient(135deg, #e6e9ee 0 9px, #f2f4f7 9px 18px); display: flex; align-items: flex-end; padding: 12px">
+              <span style="padding: 4px 10px; border-radius: 100px; background: #ffffff; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500">B1</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 3px">
+              <span style="font-size: 15px; font-weight: 600">The Wanderer</span>
+              <span style="font-size: 13px; color: #7c828a">Short fiction</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <div style="aspect-ratio: 3 / 4; border-radius: 16px; background: repeating-linear-gradient(135deg, #eef0f3 0 9px, #f7f7f7 9px 18px); display: flex; align-items: flex-end; padding: 12px">
+              <span style="padding: 4px 10px; border-radius: 100px; background: #ffffff; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500">B2</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 3px">
+              <span style="font-size: 15px; font-weight: 600">Letters from the North</span>
+              <span style="font-size: 13px; color: #7c828a">Short fiction</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <section id="start" style="padding: 96px 32px; background: #0a0b0d; color: #ffffff">
+    <div style="max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center">
+      <h2 style="margin: 0; font-size: clamp(36px, 3.8vw, 52px); font-weight: 400; line-height: 1.04; letter-spacing: -1.3px; text-wrap: pretty">Your next chapter starts here</h2>
+      <a href="#start" style="display: inline-flex; align-items: center; height: 56px; padding: 0 32px; border-radius: 100px; background: #0052ff; color: #ffffff; font-size: 16px; font-weight: 600" style-hover="background: #003ecc; color: #ffffff">Start Reading Free</a>
+      <div style="display: flex; align-items: center; gap: 12px; margin-top: 4px">
+        <span style="display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.28); font-size: 14px; font-weight: 500">
+          <span style="width: 16px; height: 16px; border-radius: 4px; background: #ffffff; display: block"></span>App Store</span>
+        <span style="display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.28); font-size: 14px; font-weight: 500">
+          <span style="width: 16px; height: 16px; border-radius: 4px; background: #ffffff; display: block"></span>Google Play</span>
+      </div>
+      <p style="margin: 0; font-size: 13px; color: #7c828a">Free to start · Cancel anytime</p>
+    </div>
+  </section>
+
+  <footer id="pricing" style="padding: 64px 32px 32px; background: #ffffff; border-top: 1px solid #dee1e6">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+      <div style="display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 32px">
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <span style="width: 20px; height: 20px; border-radius: 4px; background: #0052ff; display: block"></span>
+            <span style="font-size: 16px; font-weight: 600; letter-spacing: -0.2px">Read to Learn</span>
+          </div>
+          <span style="font-size: 14px; line-height: 1.5; color: #5b616e; max-width: 26ch">Languages, learned by reading real stories.</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #0a0b0d">Product</span>
+          <a href="#stories" style="font-size: 14px; color: #5b616e">Stories</a>
+          <a href="#levels" style="font-size: 14px; color: #5b616e">Levels</a>
+          <a href="#pricing" style="font-size: 14px; color: #5b616e">Pricing</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #0a0b0d">Company</span>
+          <a href="#about" style="font-size: 14px; color: #5b616e">About</a>
+          <a href="#blog" style="font-size: 14px; color: #5b616e">Blog</a>
+          <a href="#careers" style="font-size: 14px; color: #5b616e">Careers</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #0a0b0d">Support</span>
+          <a href="#help" style="font-size: 14px; color: #5b616e">Help Center</a>
+          <a href="#contact" style="font-size: 14px; color: #5b616e">Contact</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #0a0b0d">Legal</span>
+          <a href="#privacy" style="font-size: 14px; color: #5b616e">Privacy</a>
+          <a href="#terms" style="font-size: 14px; color: #5b616e">Terms</a>
+        </div>
+      </div>
+      <div style="height: 1px; background: #dee1e6"></div>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+        <div style="display: flex; align-items: center; gap: 16px">
+          <span style="display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 100px; background: #eef0f3; font-size: 14px; font-weight: 500">
+            <span style="width: 14px; height: 14px; border-radius: 9999px; border: 2px solid #5b616e; display: block"></span>English</span>
+          <span style="font-size: 13px; color: #7c828a">© 2026 Read to Learn</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <a href="#x" style="width: 36px; height: 36px; border-radius: 9999px; background: #eef0f3; display: inline-flex; align-items: center; justify-content: center"><span style="width: 12px; height: 12px; background: #5b616e; transform: rotate(45deg); display: block"></span></a>
+          <a href="#ig" style="width: 36px; height: 36px; border-radius: 9999px; background: #eef0f3; display: inline-flex; align-items: center; justify-content: center"><span style="width: 12px; height: 12px; border-radius: 9999px; border: 2px solid #5b616e; display: block"></span></a>
+          <a href="#yt" style="width: 36px; height: 36px; border-radius: 9999px; background: #eef0f3; display: inline-flex; align-items: center; justify-content: center"><span style="width: 12px; height: 12px; border-radius: 3px; background: #5b616e; display: block"></span></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showComparison&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showTestimonials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showLibraryPreview&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;}}">
+class Component extends DCLogic {
+  state = { scrolled: false, t: 0, slide: 0, playing: true };
+
+  go(i) {
+    this.setState({ slide: (i + 3) % 3 });
+  }
+
+  componentDidMount() {
+    this._tick = setInterval(() => this.setState(s => ({ t: (s.t + 1) % 320 })), 120);
+    this._auto = setInterval(() => {
+      if (this.state.playing) this.setState(s => ({ slide: (s.slide + 1) % 3 }));
+    }, 5200);
+    this._onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop;
+      const next = y > 40;
+      if (next !== this.state.scrolled) this.setState({ scrolled: next });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onScroll();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    clearInterval(this._tick);
+    clearInterval(this._auto);
+  }
+
+  glyph(playing) {
+    if (playing) {
+      return [
+        React.createElement('span', { key: 'a', style: { width: 3, height: 13, borderRadius: 1, background: '#ffffff', display: 'block' } }),
+        React.createElement('span', { key: 'b', style: { width: 3, height: 13, borderRadius: 1, background: '#ffffff', display: 'block' } })
+      ];
+    }
+    return React.createElement('span', {
+      style: { width: 0, height: 0, borderLeft: '9px solid #ffffff', borderTop: '6px solid transparent', borderBottom: '6px solid transparent', marginLeft: 3, display: 'block' }
+    });
+  }
+
+  bars(count, color, height) {
+    const h = [0.5, 0.9, 0.35, 1, 0.6, 0.8, 0.45, 1, 0.7, 0.3, 0.85, 0.55, 0.95, 0.4, 0.75];
+    const out = [];
+    for (let i = 0; i < count; i++) {
+      out.push(React.createElement('span', {
+        key: i,
+        style: {
+          display: 'block', flex: 1, borderRadius: 2, background: color,
+          height: Math.round(height * h[i % h.length]) + 'px',
+          animation: 'wave ' + (900 + (i % 5) * 120) + 'ms ease-in-out ' + (i * 70) + 'ms infinite'
+        }
+      }));
+    }
+    return out;
+  }
+
+  // Live playback waveform: a read head sweeps left to right, bars ahead of it
+  // sit low and gray, bars under it swell in the accent color.
+  liveBars(count, t) {
+    const head = (t % 320) / 320 * count;
+    const out = [];
+    for (let i = 0; i < count; i++) {
+      const seed = Math.sin(i * 12.9898) * 43758.5453;
+      const base = 0.28 + (seed - Math.floor(seed)) * 0.5;
+      const played = i <= head;
+      const near = Math.max(0, 1 - Math.abs(i - head) / 2.4);
+      const puls = played ? (0.7 + 0.3 * Math.sin((t * 0.5 + i) * 1.1)) : 0.55;
+      const amp = Math.min(1, base * puls + near * 0.55);
+      out.push(React.createElement('span', {
+        key: i,
+        style: {
+          display: 'block', flex: 1, minWidth: 2, borderRadius: 2,
+          background: played ? '#0052ff' : '#c9ced6',
+          opacity: played ? (0.55 + near * 0.45) : 1,
+          height: Math.max(3, Math.round(30 * amp)) + 'px',
+          transition: 'height 110ms linear, background 200ms linear, opacity 200ms linear'
+        }
+      }));
+    }
+    return out;
+  }
+
+  starRow(size, color) {
+    const out = [];
+    for (let i = 0; i < 5; i++) {
+      out.push(React.createElement('span', {
+        key: i,
+        style: {
+          display: 'block', width: size + 'px', height: size + 'px', background: color,
+          clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)'
+        }
+      }));
+    }
+    return out;
+  }
+
+  renderVals() {
+    const s = this.state.scrolled;
+    const t = this.state.t;
+    const frac = (t % 320) / 320;
+    const secs = Math.floor(frac * 102);
+    return {
+      navBg: s ? '#ffffff' : '#0a0b0d',
+      navBorder: s ? '#dee1e6' : 'transparent',
+      navText: s ? '#0a0b0d' : '#ffffff',
+      progress: (frac * 100).toFixed(1) + '%',
+      elapsed: Math.floor(secs / 60) + ':' + String(secs % 60).padStart(2, '0'),
+      readTop: Math.min(3, Math.floor(frac * 4)) * 28 + 'px',
+      slideTrack: 'translateX(-' + this.state.slide * 92 + '%)',
+      go0: () => this.go(0),
+      go1: () => this.go(1),
+      go2: () => this.go(2),
+      prev: () => this.go(this.state.slide - 1),
+      next: () => this.go(this.state.slide + 1),
+      togglePlay: () => this.setState(st => ({ playing: !st.playing })),
+      playGlyph: this.glyph(this.state.playing),
+      dot0w: this.state.slide === 0 ? '28px' : '8px',
+      dot1w: this.state.slide === 1 ? '28px' : '8px',
+      dot2w: this.state.slide === 2 ? '28px' : '8px',
+      dot0bg: this.state.slide === 0 ? '#ffffff' : '#5b616e',
+      dot1bg: this.state.slide === 1 ? '#ffffff' : '#5b616e',
+      dot2bg: this.state.slide === 2 ? '#ffffff' : '#5b616e',
+      waveform: this.liveBars(30, t),
+      waveformDark: this.bars(16, '#a8acb3', 24),
+      stars: this.starRow(14, '#f4b000'),
+      starsSmall: this.starRow(13, '#f4b000'),
+      showComparison: this.props.showComparison ?? true,
+      showTestimonials: this.props.showTestimonials ?? true,
+      showLibraryPreview: this.props.showLibraryPreview ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

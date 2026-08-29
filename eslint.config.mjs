@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Claude Design canvas source + its vendored dc-runtime (not app code).
+    "Read to Learn landing page/**",
   ]),
 ]);
 
