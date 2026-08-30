@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 const LINKS = [
   { href: "#stories", label: "Stories" },
   { href: "#how", label: "How it Works" },
-  { href: "#levels", label: "Levels" },
   { href: "#languages", label: "Languages" },
   { href: "#pricing", label: "Pricing" },
 ];
@@ -118,9 +117,6 @@ export function SiteNav() {
           <div style={{ flex: 1 }} />
 
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            <a href="#login" style={linkStyle} className="rtl-nav-cta">
-              Log in
-            </a>
             <a
               href="#start"
               className="btn-primary"

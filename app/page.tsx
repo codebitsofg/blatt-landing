@@ -4,7 +4,6 @@ import {
   ContextSection,
   HowItWorks,
   LanguagesSection,
-  LibraryPreview,
   PracticeSection,
   SiteFooter,
   StartCta,
@@ -22,14 +21,13 @@ export default function Home() {
       <Hero />
       <StatsBand />
       <LanguagesSection />
+      <FeaturedStories />
       <ContextSection />
       <StoriesSection />
       <UnderstandingSection />
       <PracticeSection />
       <HowItWorks />
-      <FeaturedStories />
       <Testimonials />
-      <LibraryPreview />
       <StartCta />
       <SiteFooter />
     </>

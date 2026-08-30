@@ -16,7 +16,6 @@ import {
   MousePointerClick,
   PlayCircle,
   Share2,
-  Smartphone,
   Target,
   Video,
 } from "lucide-react";
@@ -1378,187 +1377,301 @@ export function HowItWorks() {
 /*  Testimonials                                                               */
 /* -------------------------------------------------------------------------- */
 
-const TESTIMONIALS = [
+type Review = {
+  title: string;
+  quote: string;
+  name: string;
+  meta: string;
+  tint: string;
+};
+
+const REVIEWS: Review[] = [
   {
+    title: "I actually finish stories now",
     quote:
-      "The tap-to-translate feature means I actually finish stories instead of giving up halfway.",
+      "Tap-to-translate means I reach the last chapter instead of quitting halfway through. First app that's ever happened with.",
     name: "Marta K.",
-    meta: "learning German for 8 months",
+    meta: "German · A2 → B1",
+    tint: "#dbe6ff",
   },
   {
+    title: "Reading, not flashcards",
     quote:
-      "Finally an app where I'm reading real stories, not just matching flashcards.",
+      "An app where I read real stories instead of matching words on cards. The difference for my comprehension has been night and day.",
     name: "Daniel R.",
-    meta: "B1, self-taught for two years",
+    meta: "Self-taught, two years",
+    tint: "#ffe4d6",
   },
   {
+    title: "The first streak that stuck",
     quote:
-      "The daily streak is what's kept me consistent for the first time ever.",
+      "The daily review is the first study habit I've kept for more than a week in ten years of trying to learn a language.",
     name: "Priya S.",
-    meta: "started at A1 in January",
+    meta: "Started at A1 in January",
+    tint: "#dcefe0",
+  },
+  {
+    title: "Narration at reading pace",
+    quote:
+      "Native narration slow enough to actually follow along the text. My listening caught up to my reading inside a month.",
+    name: "Lukas B.",
+    meta: "German · B1",
+    tint: "#efe0ff",
+  },
+  {
+    title: "Turkish from absolute zero",
+    quote:
+      "Started Keloğlan with no Turkish at all. Tapping every word, then half the words, then almost none. You feel the progress.",
+    name: "Erin M.",
+    meta: "Turkish · A1 → A2",
+    tint: "#ffe9c2",
+  },
+  {
+    title: "The vocab genuinely sticks",
+    quote:
+      "Words I save from a story come back three days later, right as I'm about to forget them. The spacing just works.",
+    name: "Sofia L.",
+    meta: "German · A2",
+    tint: "#dbe6ff",
+  },
+  {
+    title: "Levels that match where I am",
+    quote:
+      "Assigned by CEFR band, not chapter length. I'm never stuck in something too hard or bored by something too easy.",
+    name: "Tomasz W.",
+    meta: "German · B2",
+    tint: "#ffe4d6",
+  },
+  {
+    title: "Twenty minutes on the train",
+    quote:
+      "One chapter each morning on my commute. It doesn't feel like studying and my German keeps climbing anyway.",
+    name: "Hannah G.",
+    meta: "German · B1",
+    tint: "#dcefe0",
+  },
+  {
+    title: "Real stories, not textbook dialogues",
+    quote:
+      "Folktales and short fiction instead of 'where is the train station'. I actually want to know what happens next.",
+    name: "Nils A.",
+    meta: "German · A2 → B1",
+    tint: "#efe0ff",
+  },
+  {
+    title: "Reading unlocked my listening",
+    quote:
+      "After three months of reading along with the narration, podcasts in Turkish suddenly started making sense.",
+    name: "Aylin D.",
+    meta: "Turkish (heritage) · B1",
+    tint: "#ffe9c2",
+  },
+  {
+    title: "No more dictionary tabs",
+    quote:
+      "Everything is inline — tap, read, keep going. I never lose the thread of the story to go look something up.",
+    name: "Marco T.",
+    meta: "German · A2",
+    tint: "#dbe6ff",
+  },
+  {
+    title: "Back into it after years away",
+    quote:
+      "Picked German back up at A2 after abandoning three other apps. This is the one I've kept for six months straight.",
+    name: "Claire F.",
+    meta: "German · A2 → B1",
+    tint: "#ffe4d6",
+  },
+  {
+    title: "The gentlest place to start",
+    quote:
+      "'The Woman at the Well' at A2 was exactly the right first book — eight short chapters, finished in a week.",
+    name: "Rob H.",
+    meta: "German · A1 → A2",
+    tint: "#dcefe0",
+  },
+  {
+    title: "My family's language, finally",
+    quote:
+      "Reading Turkish folktales with tap-to-translate on every word. I can read out loud to my parents now.",
+    name: "Deniz K.",
+    meta: "Turkish (heritage)",
+    tint: "#efe0ff",
+  },
+  {
+    title: "Review that respects my time",
+    quote:
+      "Bite-sized sessions built only from words I actually met in stories. Five focused minutes, then I'm done.",
+    name: "Yuki N.",
+    meta: "German · B1",
+    tint: "#ffe9c2",
   },
 ];
+
+const REVIEW_ROWS: Review[][] = [
+  REVIEWS.slice(0, 5),
+  REVIEWS.slice(5, 10),
+  REVIEWS.slice(10, 15),
+];
+
+function initials(name: string) {
+  return name
+    .replace(/[^\p{L}\s.]/gu, "")
+    .split(/\s+/)
+    .map((part) => part[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
+
+function ReviewCard({ r, dup }: { r: Review; dup?: boolean }) {
+  return (
+    <article
+      aria-hidden={dup || undefined}
+      style={{
+        width: 344,
+        flex: "none",
+        marginRight: 20,
+        background: "#ffffff",
+        border: "1px solid #dee1e6",
+        borderRadius: 20,
+        padding: "24px 26px",
+        display: "flex",
+        flexDirection: "column",
+        gap: 12,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+        <Stars size={12} />
+      </div>
+      <h3
+        style={{
+          margin: 0,
+          fontSize: 16,
+          fontWeight: 600,
+          lineHeight: 1.35,
+          letterSpacing: "-0.2px",
+          color: "#0a0b0d",
+        }}
+      >
+        {r.title}
+      </h3>
+      <p
+        className="rtl-review-body"
+        style={{
+          margin: 0,
+          fontSize: 14.5,
+          lineHeight: 1.55,
+          color: "#5b616e",
+        }}
+      >
+        {r.quote}
+      </p>
+      <div
+        style={{
+          marginTop: "auto",
+          paddingTop: 8,
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+        }}
+      >
+        <span
+          aria-hidden
+          style={{
+            width: 40,
+            height: 40,
+            flex: "none",
+            borderRadius: 9999,
+            background: r.tint,
+            color: "#0a0b0d",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 13,
+            fontWeight: 600,
+          }}
+        >
+          {initials(r.name)}
+        </span>
+        <span
+          style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}
+        >
+          <span style={{ fontSize: 14, fontWeight: 600, color: "#0a0b0d" }}>
+            {r.name}
+          </span>
+          <span style={{ fontSize: 13, color: "#7c828a" }}>{r.meta}</span>
+        </span>
+      </div>
+    </article>
+  );
+}
 
 export function Testimonials() {
   return (
     <section
+      id="reviews"
       className="rtl-section"
-      style={{ padding: "96px 32px", background: "#f7f7f7" }}
+      style={{ padding: "96px 0", background: "#f7f7f7", overflow: "hidden" }}
     >
       <div
-        className="rtl-grid-3"
         style={{
           ...WRAP,
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 24,
+          padding: "0 32px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 16,
+          textAlign: "center",
         }}
       >
-        {TESTIMONIALS.map((t) => (
-          <div
-            key={t.name}
-            style={{
-              background: "#ffffff",
-              border: "1px solid #dee1e6",
-              borderRadius: 24,
-              padding: 32,
-              display: "flex",
-              flexDirection: "column",
-              gap: 20,
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-              <Stars size={13} />
-            </div>
-            <p
-              className="balance"
-              style={{
-                margin: 0,
-                fontSize: 18,
-                lineHeight: 1.5,
-                fontWeight: 400,
-              }}
-            >
-              &ldquo;{t.quote}&rdquo;
-            </p>
-            <div
-              style={{
-                marginTop: "auto",
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-              }}
-            >
-              <span style={{ fontSize: 15, fontWeight: 600 }}>{t.name}</span>
-              <span style={{ fontSize: 14, color: "#7c828a" }}>{t.meta}</span>
+        <span
+          style={{
+            fontSize: 12,
+            fontWeight: 600,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "#0052ff",
+          }}
+        >
+          Reviews
+        </span>
+        <h2
+          className="balance"
+          style={{
+            margin: 0,
+            fontSize: "clamp(34px, 4vw, 56px)",
+            fontWeight: 400,
+            lineHeight: 1.05,
+            letterSpacing: "-1.4px",
+            maxWidth: "20ch",
+          }}
+        >
+          Loved by readers around the world
+        </h2>
+      </div>
+
+      <div
+        style={{
+          marginTop: 56,
+          display: "flex",
+          flexDirection: "column",
+          gap: 4,
+        }}
+      >
+        {REVIEW_ROWS.map((row, i) => (
+          <div key={i} className="rtl-marquee-row">
+            <div className="rtl-marquee">
+              {row.map((r, j) => (
+                <ReviewCard key={`a-${j}`} r={r} />
+              ))}
+              {row.map((r, j) => (
+                <ReviewCard key={`b-${j}`} r={r} dup />
+              ))}
             </div>
           </div>
         ))}
-      </div>
-    </section>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/*  Library preview                                                            */
-/* -------------------------------------------------------------------------- */
-
-const GRAD_A =
-  "repeating-linear-gradient(135deg, #eef0f3 0 9px, #f7f7f7 9px 18px)";
-const GRAD_B =
-  "repeating-linear-gradient(135deg, #e6e9ee 0 9px, #f2f4f7 9px 18px)";
-
-const BOOKS = [
-  { grad: GRAD_A, level: "A1", title: "The Hare and the Hedgehog", category: "Fairy tales" },
-  { grad: GRAD_B, level: "A1", title: "The Woman at the Well", category: "Folklore" },
-  { grad: GRAD_A, level: "A2", title: "The Town Musicians", category: "Fairy tales" },
-  { grad: GRAD_B, level: "B1", title: "The Wanderer", category: "Short fiction" },
-  { grad: GRAD_A, level: "B2", title: "Letters from the North", category: "Short fiction" },
-];
-
-export function LibraryPreview() {
-  return (
-    <section
-      id="levels"
-      className="rtl-section"
-      style={{ padding: "96px 32px" }}
-    >
-      <div style={{ ...WRAP, display: "flex", flexDirection: "column", gap: 40 }}>
-        <div
-          className="rtl-header-row"
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "space-between",
-            gap: 32,
-          }}
-        >
-          <h2
-            style={{
-              margin: 0,
-              fontSize: "clamp(30px, 3.2vw, 44px)",
-              fontWeight: 400,
-              lineHeight: 1.09,
-              letterSpacing: "-1px",
-              maxWidth: "18ch",
-            }}
-          >
-            A taste of the library
-          </h2>
-          <span
-            style={{ fontSize: 15, color: "#5b616e", paddingBottom: 6 }}
-          >
-            Hundreds more inside
-          </span>
-        </div>
-
-        <div
-          className="rtl-grid-5"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: 20,
-          }}
-        >
-          {BOOKS.map((b) => (
-            <div
-              key={b.title}
-              style={{ display: "flex", flexDirection: "column", gap: 12 }}
-            >
-              <div
-                style={{
-                  aspectRatio: "3 / 4",
-                  borderRadius: 16,
-                  background: b.grad,
-                  display: "flex",
-                  alignItems: "flex-end",
-                  padding: 12,
-                }}
-              >
-                <span
-                  style={{
-                    padding: "4px 10px",
-                    borderRadius: 100,
-                    background: "#ffffff",
-                    fontFamily: MONO,
-                    fontSize: 11,
-                    fontWeight: 500,
-                  }}
-                >
-                  {b.level}
-                </span>
-              </div>
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: 3 }}
-              >
-                <span style={{ fontSize: 15, fontWeight: 600 }}>{b.title}</span>
-                <span style={{ fontSize: 13, color: "#7c828a" }}>
-                  {b.category}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -1600,55 +1713,54 @@ export function StartCta() {
         </h2>
         <a
           href="#start"
-          className="btn-primary"
+          aria-label="Download on the App Store"
+          className="btn-appstore"
           style={{
             display: "inline-flex",
             alignItems: "center",
-            height: 56,
-            padding: "0 32px",
-            borderRadius: 100,
-            background: "#0052ff",
-            color: "#ffffff",
-            fontSize: 16,
-            fontWeight: 600,
-          }}
-        >
-          Start Reading Free
-        </a>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
             gap: 12,
-            marginTop: 4,
-            flexWrap: "wrap",
-            justifyContent: "center",
+            height: 56,
+            padding: "0 24px",
+            borderRadius: 13,
+            background: "#000000",
+            border: "1px solid rgba(255,255,255,0.28)",
+            color: "#ffffff",
+            textDecoration: "none",
           }}
         >
-          {(["App Store", "Google Play"] as const).map((store) => (
+          <svg
+            width="24"
+            height="28"
+            viewBox="0 0 384 512"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 49.3-84.6-18.4-26.4-46.2-40.9-82.9-43.7-34.9-2.7-72.9 20.6-86.8 20.6-14.4 0-46.9-19.6-72.8-19.6-53.5.8-110.1 42-110.1 124.8 0 24.5 4.5 49.8 13.5 75.9 12 34.4 55.3 118.7 100.5 117.3 23.6-.6 40.3-16.8 71-16.8 30 0 45.5 16.8 71.7 16.8 45.6-.7 84.8-77.3 96.2-111.8-61.2-28.8-57.3-84.4-57.3-86.9zm-56.1-165.5c27.1-32.1 24.6-61.3 23.8-71.9-23.9 1.4-51.6 16.3-67.4 34.6-17.4 19.6-27.6 43.8-25.4 71.4 25.8 2 49.4-11.3 69-34.1z" />
+          </svg>
+          <span
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              lineHeight: 1,
+            }}
+          >
+            <span style={{ fontSize: 11, fontWeight: 400, letterSpacing: "0.02em" }}>
+              Download on the
+            </span>
             <span
-              key={store}
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 10,
-                height: 48,
-                padding: "0 20px",
-                borderRadius: 12,
-                border: "1px solid rgba(255,255,255,0.28)",
-                fontSize: 14,
-                fontWeight: 500,
+                fontSize: 20,
+                fontWeight: 600,
+                letterSpacing: "-0.02em",
+                marginTop: 3,
               }}
             >
-              {store === "App Store" ? (
-                <Smartphone size={16} color="#ffffff" strokeWidth={2} />
-              ) : (
-                <PlayCircle size={16} color="#ffffff" strokeWidth={2} />
-              )}
-              {store}
+              App Store
             </span>
-          ))}
-        </div>
+          </span>
+        </a>
         <p style={{ margin: 0, fontSize: 13, color: "#7c828a" }}>
           Free to start &middot; Cancel anytime
         </p>

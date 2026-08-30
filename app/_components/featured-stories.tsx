@@ -1,54 +1,74 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 
-const MONO = "var(--font-jetbrains-mono), monospace";
+// Autoplay dwell per slide — also the duration of the progress sweep.
+const AUTOPLAY_MS = 5600;
+
+// Real stories from the library catalog (blatt-audio R2 bucket, library.json).
+// Titles shown here in English translation; each story is read in German in-app.
+const R2_COVERS = "https://pub-44ad1899799740bcb5402352d8f6d9fe.r2.dev/covers";
 
 const SLIDES = [
   {
-    badge: "GERMAN · A2",
-    title: "The Woman at the Well",
-    body: "A village folktale in eight short chapters — the gentlest place to start reading German at A2.",
+    title: "The Pyramids of Giza",
+    body: "The last wonder of the ancient world, retold in short, plain sentences — the gentlest place to start reading German at A1.",
+    cover: `${R2_COVERS}/5c7367b3728e.png`,
   },
   {
-    badge: "GERMAN · B1",
-    title: "The Wanderer",
-    body: "A quiet road, a thin mist, and the vocabulary of weather and distance. Narrated at reading pace.",
+    title: "The Fascinating Kangaroos",
+    body: "How Australia's boxers raise a joey in the pouch — everyday, present-tense German at A2, narrated at reading pace.",
+    cover: `${R2_COVERS}/ba419f89f0cb.png`,
   },
   {
-    badge: "TURKISH · A2",
-    title: "Keloğlan ve Değirmen",
-    body: "A Turkish folk classic in ten chapters, with tap-to-translate on every word and native narration.",
+    title: "The Beauty of the Broken",
+    body: "Kintsugi, the Japanese art of mending cracked pottery with gold, told in flowing B1 sentences with native narration.",
+    cover: `${R2_COVERS}/c3d6c003e181.png`,
+  },
+  {
+    title: "The Penicillin Revolution",
+    body: "Fleming's 1928 accident and the medicine it gave the world — long, C1 sentences with tap-to-translate on every word.",
+    cover: `${R2_COVERS}/804795c1128f.png`,
   },
 ];
-
-const COVER_SRC =
-  "https://pub-0be523b1a38f46abbf534ad97d3402b2.r2.dev/covers/0a096746b4b5.png";
 
 export function FeaturedStories() {
   const [slide, setSlide] = useState(0);
   const [playing, setPlaying] = useState(true);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduced(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  // Restart the timer whenever `slide` changes so a manual jump gets a full
+  // dwell and the progress sweep stays in step with it.
+  useEffect(() => {
     if (!playing) return;
-    const id = window.setInterval(
+    const id = window.setTimeout(
       () => setSlide((s) => (s + 1) % SLIDES.length),
-      5200,
+      AUTOPLAY_MS,
     );
-    return () => window.clearInterval(id);
-  }, [playing]);
+    return () => window.clearTimeout(id);
+  }, [playing, slide]);
 
   const go = (i: number) =>
     setSlide(((i % SLIDES.length) + SLIDES.length) % SLIDES.length);
 
   const circleBtn = {
-    width: 44,
-    height: 44,
+    width: 52,
+    height: 52,
     borderRadius: 9999,
     cursor: "pointer",
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
+    flex: "none",
   } as const;
 
   return (
@@ -68,130 +88,128 @@ export function FeaturedStories() {
       >
         <div style={{ overflow: "hidden" }}>
           <div
+            className="rtl-featured-track"
             style={{
               display: "flex",
-              transition: "transform 620ms cubic-bezier(0.4, 0, 0.2, 1)",
-              transform: `translateX(-${slide * 92}%)`,
+              transition: reduced
+                ? "transform 300ms ease"
+                : "transform 720ms cubic-bezier(0.22, 1, 0.36, 1)",
+              transform: `translate3d(-${slide * 92}%, 0, 0)`,
+              willChange: "transform",
             }}
           >
-            {SLIDES.map((s) => (
-              <div
-                key={s.title}
-                style={{
-                  minWidth: "92%",
-                  paddingRight: 20,
-                  boxSizing: "border-box",
-                }}
-              >
+            {SLIDES.map((s, i) => {
+              const active = i === slide;
+              return (
                 <div
-                  className="rtl-featured-card"
+                  key={s.title}
                   style={{
-                    background: "#16181c",
-                    borderRadius: 24,
-                    padding: 40,
-                    display: "grid",
-                    gridTemplateColumns: "0.88fr 1.12fr",
-                    gap: 56,
-                    alignItems: "center",
+                    minWidth: "92%",
+                    paddingRight: 24,
+                    boxSizing: "border-box",
+                    opacity: active ? 1 : 0.38,
+                    transition: reduced ? undefined : "opacity 620ms ease",
                   }}
                 >
                   <div
+                    className="rtl-featured-card"
                     style={{
-                      position: "relative",
-                      aspectRatio: "1 / 1",
-                      borderRadius: 16,
                       background: "#16181c",
-                      overflow: "hidden",
-                      display: "flex",
-                      alignItems: "flex-end",
-                      justifyContent: "flex-end",
-                      padding: 20,
+                      borderRadius: 28,
+                      padding: 48,
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1.2fr",
+                      gap: 56,
+                      alignItems: "center",
                     }}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={COVER_SRC}
-                      alt=""
-                      style={{
-                        position: "absolute",
-                        inset: 0,
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        filter: "invert(1) hue-rotate(180deg)",
-                        mixBlendMode: "screen",
-                      }}
-                    />
-                    <span
+                    <div
                       style={{
                         position: "relative",
-                        padding: "4px 12px",
-                        borderRadius: 100,
+                        aspectRatio: "1 / 1",
+                        borderRadius: 20,
                         background: "#0a0b0d",
-                        fontFamily: MONO,
-                        fontSize: 11,
-                        fontWeight: 500,
-                        color: "#ffffff",
+                        overflow: "hidden",
                       }}
                     >
-                      {s.badge}
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      gap: 20,
-                      paddingRight: 16,
-                    }}
-                  >
-                    <h3
-                      className="balance"
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={s.cover}
+                        alt={`Cover illustration — ${s.title}`}
+                        style={{
+                          position: "absolute",
+                          inset: 24,
+                          width: "calc(100% - 48px)",
+                          height: "calc(100% - 48px)",
+                          objectFit: "contain",
+                          filter: "invert(1) hue-rotate(180deg)",
+                          mixBlendMode: "screen",
+                        }}
+                      />
+                    </div>
+                    <div
+                      key={`copy-${i}-${slide}`}
                       style={{
-                        margin: 0,
-                        fontSize: "clamp(28px, 3vw, 44px)",
-                        fontWeight: 400,
-                        lineHeight: 1.09,
-                        letterSpacing: "-1px",
-                        color: "#ffffff",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        gap: 22,
+                        paddingRight: 16,
+                        animation:
+                          active && !reduced
+                            ? "riseIn 620ms cubic-bezier(0.22, 1, 0.36, 1) both"
+                            : undefined,
                       }}
                     >
-                      {s.title}
-                    </h3>
-                    <p
-                      className="balance"
-                      style={{
-                        margin: 0,
-                        fontSize: 18,
-                        lineHeight: 1.55,
-                        color: "#a8acb3",
-                        maxWidth: "40ch",
-                      }}
-                    >
-                      {s.body}
-                    </p>
-                    <a
-                      href="#start"
-                      className="btn-white"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        height: 56,
-                        padding: "0 32px",
-                        borderRadius: 100,
-                        background: "#ffffff",
-                        color: "#0a0b0d",
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      Start reading
-                    </a>
+                      <h3
+                        className="balance"
+                        style={{
+                          margin: 0,
+                          fontSize: "clamp(30px, 3.6vw, 52px)",
+                          fontWeight: 400,
+                          lineHeight: 1.06,
+                          letterSpacing: "-1.5px",
+                          color: "#ffffff",
+                          maxWidth: "16ch",
+                        }}
+                      >
+                        {s.title}
+                      </h3>
+                      <p
+                        className="balance"
+                        style={{
+                          margin: 0,
+                          fontSize: 18,
+                          lineHeight: 1.55,
+                          color: "#a8acb3",
+                          maxWidth: "42ch",
+                        }}
+                      >
+                        {s.body}
+                      </p>
+                      <a
+                        href="#start"
+                        className="btn-white"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          height: 56,
+                          marginTop: 6,
+                          padding: "0 34px",
+                          borderRadius: 100,
+                          background: "#ffffff",
+                          color: "#0a0b0d",
+                          fontSize: 16,
+                          fontWeight: 600,
+                        }}
+                      >
+                        Start reading
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -218,12 +236,12 @@ export function FeaturedStories() {
             marginTop: 8,
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 8,
+                gap: 10,
                 padding: "12px 16px",
                 borderRadius: 100,
                 background: "#16181c",
@@ -234,19 +252,40 @@ export function FeaturedStories() {
                   key={i}
                   type="button"
                   aria-label={`Go to story ${i + 1}`}
+                  aria-current={slide === i}
                   onClick={() => go(i)}
                   style={{
-                    width: slide === i ? 28 : 8,
-                    height: 8,
+                    position: "relative",
+                    width: slide === i ? 44 : 20,
+                    height: 4,
                     padding: 0,
                     border: 0,
                     borderRadius: 100,
-                    background: slide === i ? "#ffffff" : "#5b616e",
+                    background: "#3a3e45",
                     cursor: "pointer",
-                    transition: "width 300ms ease, background 300ms ease",
+                    overflow: "hidden",
+                    transition:
+                      "width 420ms cubic-bezier(0.22, 1, 0.36, 1)",
                     display: "block",
                   }}
-                />
+                >
+                  <span
+                    key={`fill-${slide}`}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: 100,
+                      background: "#ffffff",
+                      transformOrigin: "left",
+                      transform: i < slide ? "scaleX(1)" : "scaleX(0)",
+                      animation:
+                        i === slide && !reduced
+                          ? `rtlProgress ${AUTOPLAY_MS}ms linear forwards`
+                          : undefined,
+                      animationPlayState: playing ? "running" : "paused",
+                    }}
+                  />
+                </button>
               ))}
             </div>
             <button
@@ -256,44 +295,21 @@ export function FeaturedStories() {
               className="ctrl-dark"
               style={{
                 ...circleBtn,
+                width: 48,
+                height: 48,
                 background: "#16181c",
                 border: 0,
                 color: "#ffffff",
-                gap: 3,
               }}
             >
               {playing ? (
-                <>
-                  <span
-                    style={{
-                      width: 3,
-                      height: 13,
-                      borderRadius: 1,
-                      background: "#ffffff",
-                      display: "block",
-                    }}
-                  />
-                  <span
-                    style={{
-                      width: 3,
-                      height: 13,
-                      borderRadius: 1,
-                      background: "#ffffff",
-                      display: "block",
-                    }}
-                  />
-                </>
+                <Pause size={16} fill="#ffffff" strokeWidth={0} />
               ) : (
-                <span
-                  style={{
-                    width: 0,
-                    height: 0,
-                    borderLeft: "9px solid #ffffff",
-                    borderTop: "6px solid transparent",
-                    borderBottom: "6px solid transparent",
-                    marginLeft: 3,
-                    display: "block",
-                  }}
+                <Play
+                  size={16}
+                  fill="#ffffff"
+                  strokeWidth={0}
+                  style={{ marginLeft: 2 }}
                 />
               )}
             </button>
@@ -312,17 +328,7 @@ export function FeaturedStories() {
                 color: "#ffffff",
               }}
             >
-              <span
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderLeft: "2px solid #ffffff",
-                  borderBottom: "2px solid #ffffff",
-                  transform: "rotate(45deg)",
-                  display: "block",
-                  marginLeft: -2,
-                }}
-              />
+              <ChevronLeft size={20} strokeWidth={2} />
             </button>
             <button
               type="button"
@@ -336,17 +342,7 @@ export function FeaturedStories() {
                 color: "#ffffff",
               }}
             >
-              <span
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRight: "2px solid #ffffff",
-                  borderTop: "2px solid #ffffff",
-                  transform: "rotate(45deg)",
-                  display: "block",
-                  marginRight: -2,
-                }}
-              />
+              <ChevronRight size={20} strokeWidth={2} />
             </button>
           </div>
         </div>

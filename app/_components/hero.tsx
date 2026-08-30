@@ -1,9 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Play } from "lucide-react";
 
 const MONO = "var(--font-jetbrains-mono), monospace";
+
+// Lift for the white cards that float over the phone mockup (daily-goal pill,
+// saved-today panel).
+const FLOAT_SHADOW =
+  "0 10px 30px rgba(10,11,13,0.10), 0 2px 6px rgba(10,11,13,0.06)";
+
+// One full read-head sweep, in ms — the design's clock was 320 steps × 120ms.
+const SWEEP_MS = 320 * 120;
+const WAVE_COUNT = 30;
+
+// Per-bar base heights — the design's hash noise, evaluated once, not per frame.
+const WAVE_BASE = Array.from({ length: WAVE_COUNT }, (_, i) => {
+  const seed = Math.sin(i * 12.9898) * 43758.5453;
+  return 0.28 + (seed - Math.floor(seed)) * 0.5;
+});
 
 const HERO_LANGS = [
   { name: "German", count: "500+" },
@@ -19,53 +34,86 @@ const SAVED_WORDS: [string, string][] = [
 /**
  * Live playback waveform: a read head sweeps left to right, bars ahead of it
  * sit low and gray, bars under it swell in the accent color.
- * Ported from the design's `liveBars(30, t)`.
+ *
+ * Ported from the design's `liveBars(30, t)`. Runs its own rAF loop and writes
+ * each bar's `scaleY` / opacity / color straight to the DOM node — no React
+ * state, so no component re-render per frame. That keeps it at the display's
+ * refresh rate no matter what the rest of the page is doing, and `scaleY` is a
+ * compositor transform (no layout, no paint).
+ *
+ * Like the reviews marquee, this is a deliberate, continuous ambient element of
+ * the design — it keeps playing under `prefers-reduced-motion: reduce` (which
+ * the maintainer runs). Gating it there just freezes the player.
  */
-function LiveWave({ t }: { t: number }) {
-  const count = 30;
-  const head = ((t % 320) / 320) * count;
-  return (
-    <>
-      {Array.from({ length: count }, (_, i) => {
-        const seed = Math.sin(i * 12.9898) * 43758.5453;
-        const base = 0.28 + (seed - Math.floor(seed)) * 0.5;
+const LiveWave = memo(function LiveWave() {
+  const bars = useRef<(HTMLSpanElement | null)[]>([]);
+
+  useEffect(() => {
+    let raf = 0;
+    const start = performance.now();
+
+    const draw = (now: number) => {
+      const t = (((now - start) % SWEEP_MS) / SWEEP_MS) * 320;
+      const head = (t / 320) * WAVE_COUNT;
+      for (let i = 0; i < WAVE_COUNT; i++) {
+        const el = bars.current[i];
+        if (!el) continue;
         const played = i <= head;
         const near = Math.max(0, 1 - Math.abs(i - head) / 2.4);
         const puls = played ? 0.7 + 0.3 * Math.sin((t * 0.5 + i) * 1.1) : 0.55;
-        const amp = Math.min(1, base * puls + near * 0.55);
-        return (
-          <span
-            key={i}
-            style={{
-              display: "block",
-              flex: 1,
-              minWidth: 2,
-              borderRadius: 2,
-              background: played ? "#0052ff" : "#c9ced6",
-              opacity: played ? 0.55 + near * 0.45 : 1,
-              height: Math.max(3, Math.round(30 * amp)),
-              transition:
-                "height 110ms linear, background 200ms linear, opacity 200ms linear",
-            }}
-          />
-        );
-      })}
+        const amp = Math.min(1, WAVE_BASE[i] * puls + near * 0.55);
+        el.style.transform = `scaleY(${Math.max(0.1, amp)})`;
+        el.style.opacity = `${played ? 0.55 + near * 0.45 : 1}`;
+        el.style.background = played ? "#0052ff" : "#c9ced6";
+      }
+      raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  return (
+    <>
+      {Array.from({ length: WAVE_COUNT }, (_, i) => (
+        <span
+          key={i}
+          ref={(el) => {
+            bars.current[i] = el;
+          }}
+          style={{
+            display: "block",
+            flex: 1,
+            minWidth: 2,
+            height: 30,
+            borderRadius: 2,
+            background: "#c9ced6",
+            transformOrigin: "bottom",
+            transform: "scaleY(0.1)",
+            willChange: "transform",
+          }}
+        />
+      ))}
     </>
   );
-}
+});
 
 export function Hero() {
+  // Only the timer text and the reading highlight ride this clock — a couple of
+  // ticks a second is plenty. The waveform animates itself (see LiveWave).
   const [t, setT] = useState(0);
 
   useEffect(() => {
-    const id = window.setInterval(() => setT((v) => (v + 1) % 320), 120);
+    const step = 4;
+    const id = window.setInterval(
+      () => setT((v) => (v + step) % 320),
+      (SWEEP_MS / 320) * step, // hold the design's real-time pace
+    );
     return () => window.clearInterval(id);
   }, []);
 
   const frac = (t % 320) / 320;
   const secs = Math.floor(frac * 102);
   const elapsed = `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`;
-  const progress = `${(frac * 100).toFixed(1)}%`;
   const readTop = Math.min(3, Math.floor(frac * 4)) * 28;
 
   return (
@@ -74,8 +122,7 @@ export function Hero() {
       style={{
         background: "#ffffff",
         color: "#0a0b0d",
-        padding: "150px 32px 0px",
-        minHeight: "100vh"
+        padding: "100px 32px 0px",
       }}
     >
       <div
@@ -435,7 +482,7 @@ export function Hero() {
                       flex: 1,
                     }}
                   >
-                    <LiveWave t={t} />
+                    <LiveWave />
                   </div>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -465,9 +512,11 @@ export function Hero() {
                         left: 0,
                         top: 0,
                         bottom: 0,
+                        width: "100%",
                         borderRadius: 2,
                         background: "#0052ff",
-                        width: progress,
+                        transformOrigin: "left",
+                        transform: `scaleX(${frac.toFixed(4)})`,
                         display: "block",
                       }}
                     />
@@ -496,8 +545,9 @@ export function Hero() {
               marginTop: -20,
               padding: "30px 20px 18px",
               borderRadius: 20,
-              background: "#f5f6f8",
-              border: "1px solid #dee1e6",
+              background: "#ffffff",
+              border: "1px solid #eef0f3",
+              boxShadow: FLOAT_SHADOW,
               display: "flex",
               flexDirection: "column",
               gap: 12,
@@ -562,7 +612,7 @@ export function Hero() {
             <span
               style={{
                 height: 1,
-                background: "#dee1e6",
+                background: "#eef0f3",
                 display: "block",
               }}
             />
@@ -579,7 +629,9 @@ export function Hero() {
               zIndex: 2,
               padding: "14px 18px",
               borderRadius: 100,
-              background: "#fcfcfcf",
+              background: "#ffffff",
+              border: "1px solid #eef0f3",
+              boxShadow: FLOAT_SHADOW,
               display: "flex",
               alignItems: "center",
               gap: 10,

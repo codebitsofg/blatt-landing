@@ -71,16 +71,32 @@ footer[id] {
   }
 }
 
+/* Featured carousel: autoplay progress sweep on the active segment. */
+@keyframes rtlProgress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 /* Hover states ported from the design's `style-hover` attributes. */
 .btn-primary,
 .btn-secondary,
 .btn-dark,
 .btn-white,
 .btn-outline-dark,
+.btn-appstore,
 .link-fade,
 .ctrl-dark,
 .ctrl-outline {
   transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.btn-appstore:hover {
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.42);
 }
 
 .btn-primary:hover {
@@ -124,6 +140,66 @@ footer[id] {
   text-wrap: pretty;
 }
 
+/* Review marquee (Testimonials) — pure-CSS auto-scrolling rows.
+   Adjacent rows travel in opposite directions (left / right / left). */
+.rtl-marquee-row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+}
+
+.rtl-marquee {
+  --marquee-duration: 64s;
+  display: flex;
+  width: max-content;
+  padding: 12px 0;
+  animation: marquee var(--marquee-duration) linear infinite;
+  will-change: transform;
+}
+
+.rtl-marquee-row:nth-child(2) .rtl-marquee {
+  --marquee-duration: 82s;
+  animation-direction: reverse;
+}
+
+.rtl-marquee-row:nth-child(3) .rtl-marquee {
+  --marquee-duration: 98s;
+}
+
+.rtl-marquee-row:hover .rtl-marquee,
+.rtl-marquee:focus-within {
+  animation-play-state: paused;
+}
+
+.rtl-review-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -132,6 +208,19 @@ footer[id] {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* The review marquee is a deliberate, continuous element of the design —
+     keep it scrolling (hover / focus still pauses it). */
+  .rtl-marquee {
+    animation-duration: var(--marquee-duration) !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  /* Paging is the featured carousel's whole affordance — keep a brief
+     transition so moving between cards still reads as a change, not a jump. */
+  .rtl-featured-track {
+    transition-duration: 300ms !important;
   }
 }
 
