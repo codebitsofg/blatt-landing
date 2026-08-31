@@ -1,3 +1,4 @@
+import { Faq } from "./_components/faq";
 import { FeaturedStories } from "./_components/featured-stories";
 import { Hero } from "./_components/hero";
 import {
@@ -28,6 +29,7 @@ export default function Home() {
       <PracticeSection />
       <HowItWorks />
       <Testimonials />
+      <Faq />
       <StartCta />
       <SiteFooter />
     </>

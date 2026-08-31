@@ -128,6 +128,17 @@ footer[id] {
   color: #a8acb3;
 }
 
+/* Get-the-app page: footer links fade up to white on hover
+   (ported from the design's `style-hover="color: #ffffff"`). */
+.gta-footer-link {
+  color: #a8acb3;
+  transition: color 180ms ease;
+}
+
+.gta-footer-link:hover {
+  color: #ffffff;
+}
+
 .ctrl-dark:hover {
   background: #24272c;
 }
@@ -138,6 +149,12 @@ footer[id] {
 
 .balance {
   text-wrap: pretty;
+}
+
+/* FAQ band fills the viewport (dynamic vh where supported). */
+.rtl-faq {
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* Review marquee (Testimonials) — pure-CSS auto-scrolling rows.
