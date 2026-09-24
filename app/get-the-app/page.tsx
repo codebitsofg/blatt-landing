@@ -700,7 +700,7 @@ export default function GetTheAppPage() {
               &copy; 2026 BLATT
             </span>
             <a
-              href="#privacy"
+              href="/privacy"
               className="gta-footer-link"
               style={{ fontSize: 12 }}
             >
